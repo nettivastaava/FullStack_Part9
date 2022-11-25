@@ -1,6 +1,6 @@
 // type bmiCategory = 'Underweight' | 'Normal range' | 'Overweight' | 'Obese';
 
-const calculateBmi = (height: number, weight: number) => {
+export const calculateBmi = (height: number, weight: number) => {
   const score = weight / ((height / 100) * 2);
 
   if (score < 18.5) {
