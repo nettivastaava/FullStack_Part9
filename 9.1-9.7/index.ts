@@ -17,10 +17,10 @@ app.get('/bmi', (req, res) => {
       height: height,
       weight: weight,
       bmi: bmiStatus
-    }
+    };
     res.send(response);
   }
-})
+});
   
 const PORT = 3003;
   
