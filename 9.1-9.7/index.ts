@@ -28,8 +28,10 @@ app.get('/bmi', (req, res) => {
 app.post('/exercises', (req, res) => {
   const body = req.body;
 
-  if (!body?.daily_exercises || isNaN(Number(body?.target))) {
+  if (!body?.daily_exercises || !body?.target) {
     res.json({ error: 'parameters missing' });
+  } else if (isNaN(Number(body?.target))){
+    res.json({ error: 'malformatted parameters'})
   } else {
     const statistics: Statistics = calculateExercises(Number(body.target), body.daily_exercises);
     res.send(statistics);
