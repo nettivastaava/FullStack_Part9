@@ -1,4 +1,4 @@
-interface Statistics {
+export interface Statistics {
   periodLength: number,
   trainingDays: number,
   target: number,
@@ -8,22 +8,24 @@ interface Statistics {
   ratingDescription: string
 }
 
-const ratingDescriptions = [
+export const ratingDescriptions = [
   "Come on!",
   "M'kay",
   "Brilliant!"
 ];
 
-const calculateExercises = (target: number, weeklyHours: Array<number>): Statistics => {
+export const calculateExercises = (target: number, weeklyHours: Array<number>): Statistics => {
+  /*
   if (weeklyHours.length < 1) {
     throw new Error('Provided an empty list');
   }
-  const trainingDays = weeklyHours.filter(hoursCount => hoursCount > 0);
-  const average = weeklyHours.reduce((accumulator, currentVale) => accumulator + currentVale, 0) / weeklyHours.length;
+  */
+  const trainingDays = weeklyHours?.filter(hoursCount => hoursCount > 0);
+  const average = weeklyHours?.reduce((accumulator, currentVale) => accumulator + currentVale, 0) / weeklyHours.length;
   const rating = average >= 3 ? 3 : average >= 2 ? 2 : 1;
   return {
-    periodLength: weeklyHours.length,
-    trainingDays: trainingDays.length,
+    periodLength: weeklyHours?.length,
+    trainingDays: trainingDays?.length,
     target: target,
     average,
     rating,

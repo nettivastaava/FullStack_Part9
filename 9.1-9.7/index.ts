@@ -1,6 +1,9 @@
 import express from 'express';
 import { calculateBmi } from './bmiCalculator';
+import { calculateExercises, Statistics } from './exerciseCalculator';
+
 const app = express();
+app.use(express.json());
 
 app.get('/hello', (_req, res) => {
   res.send('Hello Full Stack!');
@@ -21,6 +24,17 @@ app.get('/bmi', (req, res) => {
     res.send(response);
   }
 });
+
+app.post('/exercises', (req, res) => {
+  const body = req.body;
+
+  if (!body?.daily_exercises || isNaN(Number(body?.target))) {
+    res.json({ error: 'parameters missing' });
+  } else {
+    const statistics: Statistics = calculateExercises(Number(body.target), body.daily_exercises);
+    res.send(statistics);
+  }
+})
   
 const PORT = 3003;
   
