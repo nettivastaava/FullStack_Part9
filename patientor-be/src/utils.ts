@@ -30,7 +30,7 @@ const isGender = (gender: any): gender is Gender => {
 
 const validateGender = (gender: unknown): Gender => {
   if (!gender || !isGender(gender)) {
-    throw new Error('Incorrect or missing gender' + gender);
+    throw new Error('Incorrect or missing gender ' + gender);
   }
 
   return gender;
@@ -38,7 +38,7 @@ const validateGender = (gender: unknown): Gender => {
 
 const validateOccupation = (occupation: unknown): string => {
   if (!occupation || !isString(occupation)) {
-    throw new Error('Incorrect or missing occupation' + occupation);
+    throw new Error('Incorrect or missing occupation ' + occupation);
   }
 
   return occupation;
@@ -54,10 +54,19 @@ const isSSN = (ssn: string): boolean => {
 
 const validateSSN = (ssn: unknown): string => {
   if (!ssn || !isString(ssn) || !isSSN(ssn)) {
-    throw new Error('Incorrect or missing SSN' +  ssn);
+    throw new Error('Incorrect or missing SSN ' +  ssn);
   }
 
   return ssn;
+};
+
+const validateEntries = (entries: unknown): Array<string> => {
+  if (!entries || !Array.isArray(entries)) {
+    throw new Error('Incorrect or missing entries ' +  entries);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return entries;
 };
 
 const toNewPatient = (object: any): newPatient => {
@@ -66,7 +75,8 @@ const toNewPatient = (object: any): newPatient => {
     dateOfBirth: parseDate(object.dateOfBirth),
     gender: validateGender(object.gender),
     occupation: validateOccupation(object.occupation),
-    ssn: validateSSN(object.ssn)
+    ssn: validateSSN(object.ssn),
+    entries: validateEntries(object.entries)
   };
 
   return newPatientObjct;
