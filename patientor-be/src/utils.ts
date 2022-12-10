@@ -59,7 +59,7 @@ const validateSSN = (ssn: unknown): string => {
 
   return ssn;
 };
-
+/*
 const validateEntries = (entries: unknown): Array<string> => {
   if (!entries || !Array.isArray(entries)) {
     throw new Error('Incorrect or missing entries ' +  entries);
@@ -68,7 +68,7 @@ const validateEntries = (entries: unknown): Array<string> => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return entries;
 };
-
+*/
 const toNewPatient = (object: any): newPatient => {
   const newPatientObjct: newPatient = {
     name: parseName(object.name),
@@ -76,7 +76,7 @@ const toNewPatient = (object: any): newPatient => {
     gender: validateGender(object.gender),
     occupation: validateOccupation(object.occupation),
     ssn: validateSSN(object.ssn),
-    entries: validateEntries(object.entries)
+    entries: []
   };
 
   return newPatientObjct;
