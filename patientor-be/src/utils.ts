@@ -1,4 +1,4 @@
-import { newPatient, Gender } from "./types";
+import { newPatient, Gender, Entry } from "./types";
 
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String;
@@ -69,6 +69,26 @@ const validateEntries = (entries: unknown): Array<string> => {
   return entries;
 };
 */
+
+const isEntries = (entries: any[]): entries is Entry[] => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const invalid = entries.find(entry => entry.type !== 'Hospital' && entry.type !== 'OccupationalHealthcare' && entry.type !== 'HealthCheck');
+  
+  if (invalid) {
+    return false;
+  }
+
+  return true;
+};
+
+const validateEntries = (entries: unknown[]): Entry[] => {
+  if (!entries || !isEntries(entries)) {
+    throw new Error('Incorrect or missing entries ' + entries);
+  }
+  
+  return entries;
+};
+
 const toNewPatient = (object: any): newPatient => {
   const newPatientObjct: newPatient = {
     name: parseName(object.name),
@@ -76,7 +96,8 @@ const toNewPatient = (object: any): newPatient => {
     gender: validateGender(object.gender),
     occupation: validateOccupation(object.occupation),
     ssn: validateSSN(object.ssn),
-    entries: []
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    entries: validateEntries(object.entries)
   };
 
   return newPatientObjct;
