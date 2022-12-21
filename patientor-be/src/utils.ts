@@ -59,20 +59,10 @@ const validateSSN = (ssn: unknown): string => {
 
   return ssn;
 };
-/*
-const validateEntries = (entries: unknown): Array<string> => {
-  if (!entries || !Array.isArray(entries)) {
-    throw new Error('Incorrect or missing entries ' +  entries);
-  }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return entries;
-};
-*/
-
-const isEntries = (entries: any[]): entries is Entry[] => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const invalid = entries.find(entry => entry.type !== 'Hospital' && entry.type !== 'OccupationalHealthcare' && entry.type !== 'HealthCheck');
+const isEntries = (entries: any): entries is Entry[] => {
+  const entriesToValidate = entries as Entry[];
+  const invalid = entriesToValidate.find(entry => entry.type !== 'Hospital' && entry.type !== 'OccupationalHealthcare' && entry.type !== 'HealthCheck');
   
   if (invalid) {
     return false;
@@ -81,9 +71,13 @@ const isEntries = (entries: any[]): entries is Entry[] => {
   return true;
 };
 
-const validateEntries = (entries: unknown[]): Entry[] => {
-  if (!entries || !isEntries(entries)) {
+const validateEntries = (entries: unknown): Entry[] => {
+  if (!isEntries(entries)) {
     throw new Error('Incorrect or missing entries ' + entries);
+  }
+
+  if (!entries) {
+    return [];
   }
   
   return entries;
@@ -96,7 +90,6 @@ const toNewPatient = (object: any): newPatient => {
     gender: validateGender(object.gender),
     occupation: validateOccupation(object.occupation),
     ssn: validateSSN(object.ssn),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     entries: validateEntries(object.entries)
   };
 
