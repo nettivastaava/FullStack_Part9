@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { newPatient, Gender, Entry, newEntry, HealthCheckRating, Diagnosis, Discharge } from "./types";
 import diagnoses from "../data/diagnoses";
 
@@ -25,7 +27,6 @@ const parseDate = (dateOfBirth: unknown): string => {
 };
 
 const isGender = (gender: any): gender is Gender => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return Object.values(Gender).includes(gender);
 };
 
@@ -107,7 +108,6 @@ export const toNewPatient = (object: any): newPatient => {
 };
 
 const isHealthCheckRating = (healthCheckRating: any): healthCheckRating is HealthCheckRating => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return Object.values(HealthCheckRating).includes(healthCheckRating);
 };
 
@@ -179,7 +179,6 @@ const parseSickLeave = (sickLeaveObj: unknown): any => {
 
 const validateHealthCheck = (object: any): newEntry => {
   const newEntryObject: newEntry = {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     type: parseType(object.type),
     date: parseDate(object.date),
     specialist: parseName(object.specialist),
@@ -193,7 +192,6 @@ const validateHealthCheck = (object: any): newEntry => {
 
 const validateHospitalEntry = (object: any): newEntry => {
   const newEntryObject: newEntry = {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     type: parseType(object.type),
     date: parseDate(object.date),
     specialist: parseName(object.specialist),
@@ -207,14 +205,12 @@ const validateHospitalEntry = (object: any): newEntry => {
 
 const validateOccupationalHealthcareEntry = (object: any): newEntry => {
   const newEntryObject: newEntry = {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     type: parseType(object.type),
     date: parseDate(object.date),
     specialist: parseName(object.specialist),
     description: parseName(object.description),
     diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
     employerName: parseName(object.employerName),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     sickLeave: parseSickLeave(object.sickLeave),
   };
 
