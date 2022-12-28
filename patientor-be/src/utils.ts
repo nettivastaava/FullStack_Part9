@@ -112,7 +112,7 @@ const isHealthCheckRating = (healthCheckRating: any): healthCheckRating is Healt
 };
 
 const validateHealthCheckRating = (healthCheckRating: unknown): HealthCheckRating => {
-  if (!healthCheckRating || !isHealthCheckRating(healthCheckRating)) {
+  if (!isHealthCheckRating(healthCheckRating)) {
     throw new Error('Incorrect or missing health check rating ' + healthCheckRating);
   }
 
