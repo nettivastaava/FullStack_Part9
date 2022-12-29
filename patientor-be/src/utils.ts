@@ -157,7 +157,6 @@ const validateDischarge = (obj: unknown): any => {
 
 const parseDischarge = (obj: unknown): Discharge => {
   const discharge = obj as Discharge;
-  console.log('dis ', discharge);
   if (!discharge || !validateDischarge(discharge)) {
     throw new Error('invalid or missing discharge ' + discharge);
   }
@@ -170,8 +169,13 @@ const parseSickLeave = (sickLeaveObj: unknown): any => {
     startDate: string,
     endDate: string
   };
-  if (!sickLeave || !sickLeave.startDate || !sickLeave.endDate || !parseDate(sickLeave.startDate) || !parseDate(sickLeave.endDate)) {
-    throw new Error('invalid or missing sick leave ' + sickLeave);
+
+  if (!sickLeave || sickLeave?.startDate === "" || sickLeave?.endDate === "") {
+    return null;
+  }
+
+  if (!sickLeave.startDate || !sickLeave.endDate || !parseDate(sickLeave.startDate) || !parseDate(sickLeave.endDate)) {
+    throw new Error('invalid sick leave ' + sickLeave.startDate + '-' + sickLeave.endDate);
   }
 
   return sickLeave;
